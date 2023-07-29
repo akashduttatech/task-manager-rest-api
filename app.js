@@ -3,16 +3,15 @@ const express = require("express");
 const app = express();
 const connectDB = require("./db/connection");
 const tasks = require("./routes/tasks");
+const notFound = require("./middleware/notFound");
 
 /* middleware */
 app.use(express.json());
 
-app.post("/test", (req, res) => {
-  console.log(req.body);
-  res.send("tested");
-});
 /* main route */
 app.use("/api/v1/tasks", tasks);
+/* not found route */
+app.use(notFound);
 
 const main = async () => {
   await connectDB(process.env.MONGODB_URI);
